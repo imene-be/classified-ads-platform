@@ -1,62 +1,70 @@
-# Projet Next.js
+# Plateforme d'annonces
 
-## Auteurs
-**Nassim Bentifraouine**  
-**Imene Bentifraouine**
+Application web de gestion d'annonces avec authentification et espace d'administration, construite avec Next.js, Prisma et PostgreSQL.
 
----
+## Fonctionnalités
 
-## Prérequis
-Avant de commencer, assurez-vous d'avoir les outils suivants installés sur votre machine :
+- Inscription et connexion avec NextAuth (identifiants et comptes liés)
+- Espace d'administration protégé par middleware
+- Création, modification et suppression d'annonces (titre, description, image) depuis des fenêtres modales
+- Fenêtre de détail d'une annonce
+- Gestion des utilisateurs via l'API
+- Interface construite avec des composants shadcn/ui et Tailwind CSS
 
-- [Node.js](https://nodejs.org/) (version recommandée : 16.x ou plus récente)
-- [npm](https://www.npmjs.com/)
+## Technologies
 
----
+- Next.js 15 (App Router) et React 19
+- TypeScript
+- NextAuth pour l'authentification
+- Prisma et PostgreSQL
+- Tailwind CSS et shadcn/ui
+- bcrypt pour le hachage des mots de passe
 
-## Configuration du projet
+## Structure
 
-### 1. Récupérer le fichier `.env`
+```
+src/
+  app/
+    api/ads/       routes et service des annonces
+    api/users/     routes et service des utilisateurs
+    api/auth/      NextAuth
+    [local]/(admin)/ads/   page d'administration des annonces
+  components/      composants communs et composants d'interface
+  middleware.ts    protection des pages d'administration
+prisma/
+  schema.prisma    modèles Users, Accounts, Sessions, Ads
+  migrations/      historique des migrations
+```
 
-⚠️ **Attention importante** ⚠️ : Le fichier `.env` est essentiel pour le bon fonctionnement de l'application, car il contient les variables d'environnement nécessaires (clés API, informations de connexion à la base de données, etc.). **Ne partagez jamais ce fichier publiquement**.
+## Installation
 
-Pour obtenir ce fichier, veuillez me contacter directement.  
-Sans ce fichier, l'application ne pourra pas fonctionner correctement.
-
----
-
-### 2. Installation des dépendances
-
-Dans le répertoire du projet, exécutez la commande suivante pour installer toutes les dépendances listées dans le fichier `package.json` :
+Prérequis : Node.js 18 ou plus récent et une base PostgreSQL.
 
 ```bash
+git clone https://github.com/imene-be/classified-ads-platform.git
+cd classified-ads-platform
 npm install
 ```
 
----
+Créez un fichier `.env` à la racine (ce fichier n'est pas versionné) :
 
-### 3. Configuration Prisma
+```env
+DATABASE_URL="postgresql://utilisateur:motdepasse@hote:5432/base"
+DIRECT_URL="postgresql://utilisateur:motdepasse@hote:5432/base"
+NEXTAUTH_SECRET="une_longue_chaine_aleatoire"
+NEXTAUTH_URL="http://localhost:3000"
+```
 
-Ce projet utilise Prisma comme ORM pour interagir avec la base de données.
-
-Assurez-vous que votre base de données est bien configurée et accessible.
-
-Modifiez le fichier `.env` pour inclure l'URL de connexion à votre base de données.
-
-Générez le client Prisma en exécutant la commande suivante :
+Puis préparez la base et lancez l'application :
 
 ```bash
 npx prisma generate
-```
-
----
-
-### 4. Lancer le serveur de développement
-
-Une fois toutes les étapes précédentes terminées, vous pouvez démarrer le serveur de développement avec la commande :
-
-```bash
+npx prisma migrate deploy
 npm run dev
 ```
 
-L'application sera accessible à l'adresse suivante : [http://localhost:3000](http://localhost:3000)
+L'application est disponible sur [http://localhost:3000](http://localhost:3000).
+
+---
+
+Projet réalisé à deux par Nassim Bentifraouine et [Imène Bentifraouine](https://imenebe.fr).
